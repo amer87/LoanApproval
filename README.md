@@ -35,7 +35,6 @@ This is a simple and extensible console application that evaluates loan applicat
 ---
 
 ## 🏗️ Project Structure
-## 🏗️ Project Structure
 
 ```text
 Com.LoanApproval.sln
