@@ -37,30 +37,43 @@ This is a simple and extensible console application that evaluates loan applicat
 ## 🏗️ Project Structure
 
 Com.LoanApproval.sln
-├── Com.LoanApproval.Application/
-│ ├── Commands/
-│ ├── Dtos/
-│ ├── Interfaces/
-│ ├── Queries/
-│ ├── ReadModels/
-│ └── Com.LoanApproval.Application.csproj
-├── Com.LoanApproval.Console/
-│ ├── Program.cs
-│ └── Com.LoanApproval.Console.csproj
-├── Com.LoanApproval.Domain/
-│ ├── Models/
-│ ├── Rules/
-│ └── Com.LoanApproval.Domain.csproj
-├── Com.LoanApproval.Infrastructure/
-│ ├── LoanStatisticsService.cs
-│ ├── ServiceRegistration.cs
-│ └── Com.LoanApproval.Infrastructure.csproj
-├── Com.LoanApproval.Tests/
-│ ├── LoanRuleTests.cs
-│ ├── LoanStatisticsRepositoryTests.cs
-│ └── Com.LoanApproval.Tests.csproj
-└── README.md
-
+Com.LoanApproval.Application/
+│   Com.LoanApproval.Application.csproj
+│   Commands/
+│       EvaluateLoanCommand.cs
+│       EvaluateLoanCommandHandler.cs
+│   Dtos/
+│       LoanStatisticsDto.cs
+│   Interfaces/
+│       ILoanStatisticsRepository.cs
+│   Queries/
+│       GetLoanStatisticsQuery.cs
+│       GetLoanStatisticsQueryHandler.cs
+│   ReadModels/
+│       LoanStatisticsReadModel.cs
+Com.LoanApproval.Console/
+│   Com.LoanApproval.Console.csproj
+│   Program.cs
+Com.LoanApproval.Domain/
+│   Com.LoanApproval.Domain.csproj
+│   Models/
+│       LoanApplication.cs
+│   Rules/
+│       HighValueLoanRule.cs
+│       ILoanRule.cs
+│       LoanAmountRangeRule.cs
+│       LowValueLoanRule.cs
+│       RuleResult.cs
+│   ServiceRegistration.cs
+Com.LoanApproval.Infrastructure/
+│   Com.LoanApproval.Infrastructure.csproj
+│   LoanStatisticsRepository.cs
+│   ServiceRegistration.cs
+Com.LoanApproval.Tests/
+│   Com.LoanApproval.Tests.csproj
+│   LoanRuleTests.cs
+│   LoanStatisticsRepositoryTests.cs
+README.md
 ---
 
 ## 🚀 How to Build and Run
