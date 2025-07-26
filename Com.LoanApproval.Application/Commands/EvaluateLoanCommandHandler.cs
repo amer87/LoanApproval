@@ -10,12 +10,21 @@ public class EvaluateLoanCommandHandler(IEnumerable<ILoanRule> rules) : IRequest
 
     public Task<RuleResult> Handle(EvaluateLoanCommand request, CancellationToken cancellationToken)
     {
+        var application = new LoanApplication
+        {
+            LoanAmount = request.LoanAmount,
+            AssetValue = request.AssetValue,
+            CreditScore = request.CreditScore
+        };
+
         foreach (var rule in _rules)
         {
-            var result = rule.Evaluate(request.Application);
+
+            var result = rule.Evaluate(application);
             if (!result.IsSuccess)
                 return Task.FromResult(result);
         }
+
         return Task.FromResult(RuleResult.Success());
     }
 }

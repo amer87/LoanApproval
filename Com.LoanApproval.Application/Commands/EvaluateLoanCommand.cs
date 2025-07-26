@@ -4,7 +4,6 @@ using MediatR;
 
 namespace Com.LoanApproval.Application.Commands;
 
-public class EvaluateLoanCommand(LoanApplication application) : IRequest<RuleResult>
-{
-    public LoanApplication Application { get; set; } = application;
-}
+// TODO : Add fluent validation for this command
+
+public record EvaluateLoanCommand(decimal LoanAmount, decimal AssetValue, int CreditScore) : IRequest<RuleResult>;

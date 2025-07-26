@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Com.LoanApproval.Application.ReadModels;
 
 namespace Com.LoanApproval.Application.Interfaces;

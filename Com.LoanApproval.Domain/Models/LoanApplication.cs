@@ -1,8 +1,8 @@
 namespace Com.LoanApproval.Domain.Models;
 
-public class LoanApplication
+public record LoanApplication
 {
-    public decimal LoanAmount { get; set; }
-    public decimal AssetValue { get; set; }
-    public int CreditScore { get; set; }
+    public decimal LoanAmount { get; init; }
+    public decimal AssetValue { get; init; }
+    public int CreditScore { get; init; }
 }
