@@ -1,8 +1,4 @@
-using Xunit;
-using Com.LoanApproval.Application.Interfaces;
 using Com.LoanApproval.Infrastructure;
-using Com.LoanApproval.Application.ReadModels;
-using System.Linq;
 
 namespace Com.LoanApproval.Tests;
 

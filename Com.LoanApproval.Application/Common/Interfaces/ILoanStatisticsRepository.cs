@@ -1,6 +1,6 @@
 using Com.LoanApproval.Application.ReadModels;
 
-namespace Com.LoanApproval.Application.Interfaces;
+namespace Com.LoanApproval.Application.Common.Interfaces;
 
 public interface ILoanStatisticsRepository
 {

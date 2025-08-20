@@ -1,6 +1,6 @@
 using MediatR;
-using Com.LoanApproval.Application.Interfaces;
-using Com.LoanApproval.Application.Dtos;
+using Com.LoanApproval.Application.Common.Interfaces;
+using Com.LoanApproval.Application.Common.Dtos;
 
 namespace Com.LoanApproval.Application.Queries;
 
@@ -21,7 +21,7 @@ public class GetLoanStatisticsQueryHandler(ILoanStatisticsRepository repository)
         // and adjust the average calculation accordingly.
         // If declined loans should not be included, keep the current logic.
         var avgLtv = approved.Any()
-            ? approved.Average(r => r.AssetValue == 0 ? 0 : (r.LoanAmount / r.AssetValue) * 100)
+            ? approved.Average(r => r.AssetValue == 0 ? 0 : (r.LoanAmount / r.AssetValue))
             : 0m;
 
         return Task.FromResult(new LoanStatisticsDto

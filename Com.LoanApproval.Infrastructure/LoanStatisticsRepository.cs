@@ -1,5 +1,5 @@
 using System.Collections.Concurrent;
-using Com.LoanApproval.Application.Interfaces;
+using Com.LoanApproval.Application.Common.Interfaces;
 using Com.LoanApproval.Application.ReadModels;
 
 namespace Com.LoanApproval.Infrastructure;

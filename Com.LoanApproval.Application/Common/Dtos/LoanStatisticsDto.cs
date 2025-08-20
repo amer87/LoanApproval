@@ -1,4 +1,4 @@
-namespace Com.LoanApproval.Application.Dtos;
+namespace Com.LoanApproval.Application.Common.Dtos;
 
 public class LoanStatisticsDto
 {

@@ -1,4 +1,3 @@
-using Xunit;
 using Com.LoanApproval.Domain.Models;
 using Com.LoanApproval.Domain.Rules;
 

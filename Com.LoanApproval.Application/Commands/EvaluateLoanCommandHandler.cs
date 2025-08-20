@@ -1,30 +1,33 @@
+using Com.LoanApproval.Application.Common.Interfaces;
 using Com.LoanApproval.Domain.Models;
 using Com.LoanApproval.Domain.Rules;
 using MediatR;
 
 namespace Com.LoanApproval.Application.Commands;
 
-public class EvaluateLoanCommandHandler(IEnumerable<ILoanRule> rules) : IRequestHandler<EvaluateLoanCommand, RuleResult>
+public class EvaluateLoanCommandHandler(
+    IEnumerable<ILoanRule> rules,
+    ILoanStatisticsRepository statsRepository)
+    : IRequestHandler<EvaluateLoanCommand, List<RuleResult>>
 {
     private readonly IEnumerable<ILoanRule> _rules = rules;
+    private readonly ILoanStatisticsRepository _statsRepository = statsRepository;
 
-    public Task<RuleResult> Handle(EvaluateLoanCommand request, CancellationToken cancellationToken)
+    public Task<List<RuleResult>> Handle(EvaluateLoanCommand request, CancellationToken cancellationToken)
     {
+        (var loanAmount, var assetValue, var creditScore) = request;
+
         var application = new LoanApplication
         {
-            LoanAmount = request.LoanAmount,
-            AssetValue = request.AssetValue,
-            CreditScore = request.CreditScore
+            LoanAmount = loanAmount,
+            AssetValue = assetValue,
+            CreditScore = creditScore
         };
 
-        foreach (var rule in _rules)
-        {
-
-            var result = rule.Evaluate(application);
-            if (!result.IsSuccess)
-                return Task.FromResult(result);
-        }
-
-        return Task.FromResult(RuleResult.Success());
+        var orderedRules = _rules.OrderBy(r => r.Priority).ToList();
+        List<RuleResult> evaluationResult = [.. _rules.Select(rule => rule.Evaluate(application))];
+        var isApproved = evaluationResult.All(r => r.IsSuccess);
+        _statsRepository.AddRecord(loanAmount, assetValue, isApproved);
+        return Task.FromResult(evaluationResult);
     }
 }

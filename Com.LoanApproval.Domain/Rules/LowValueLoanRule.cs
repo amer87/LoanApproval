@@ -7,20 +7,31 @@ namespace Com.LoanApproval.Domain.Rules;
 
 public class LowValueLoanRule : ILoanRule
 {
+    public int Priority { get; set; } = 2; // Set a default priority for this rule
     public RuleResult Evaluate(LoanApplication application)
     {
-        if (application.LoanAmount < 1000000)
+        if (application.LoanAmount >= 1000000)
+            return RuleResult.Success("Low value loan rule passed.");
+
+        if (application.AssetValue <= 0)
+            return RuleResult.Failure("Asset value must be greater than zero.");
+
+        var ltv = application.LoanAmount / application.AssetValue;
+
+        return (ltv, application.CreditScore) switch
         {
-            var ltv = application.LoanAmount / application.AssetValue;
-            if (ltv < 0.6m && application.CreditScore < 750)
-                return RuleResult.Failure("LTV < 60% requires credit score ≥ 750.");
-            if (ltv < 0.8m && ltv >= 0.6m && application.CreditScore < 800)
-                return RuleResult.Failure("LTV < 80% requires credit score ≥ 800.");
-            if (ltv < 0.9m && ltv >= 0.8m && application.CreditScore < 900)
-                return RuleResult.Failure("LTV < 90% requires credit score ≥ 900.");
-            if (ltv >= 0.9m)
-                return RuleResult.Failure("LTV ≥ 90% is not allowed.");
-        }
-        return RuleResult.Success();
+            ( >= 0.9m, _) => RuleResult.Failure("LTV ≥ 90% is not allowed."),
+
+            ( >= 0.8m and < 0.9m, < 900) => RuleResult.Failure(
+                $"LTV between 80%-90% requires credit score ≥ 900 (current: {application.CreditScore})."),
+
+            ( >= 0.6m and < 0.8m, < 800) => RuleResult.Failure(
+                $"LTV between 60%-80% requires credit score ≥ 800 (current: {application.CreditScore})."),
+
+            ( < 0.6m, < 750) => RuleResult.Failure(
+                $"LTV < 60% requires credit score ≥ 750 (current: {application.CreditScore})."),
+
+            _ => RuleResult.Success("Low value loan rule passed.")
+        };
     }
 }
