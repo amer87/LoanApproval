@@ -36,7 +36,8 @@ This is a simple and extensible console application that evaluates loan applicat
 
 ## 🏗️ Project Structure
 
-```Com.LoanApproval.sln
+```text
+Com.LoanApproval.sln
 Com.LoanApproval.Application/
 │   Com.LoanApproval.Application.csproj
 │   Commands/
@@ -73,7 +74,8 @@ Com.LoanApproval.Tests/
 │   Com.LoanApproval.Tests.csproj
 │   LoanRuleTests.cs
 │   LoanStatisticsRepositoryTests.cs
-README.md```
+README.md
+```
 
 ---
 
